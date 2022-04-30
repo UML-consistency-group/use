@@ -1,0 +1,65 @@
+
+model RentalCompany
+
+class Car
+attributes
+    registrationNumber: String
+end
+
+class CarGroup
+attributes
+    category: String
+end
+
+class Branch
+attributes
+    id: String
+    address: String
+end
+
+class Rental
+attributes
+    id: String
+    bestPrice: Integer
+    state: String
+    agreedEnding: Integer
+end
+
+class Customer
+attributes
+    id: String
+    name: String
+    birthdate: Integer
+    licenseExpDate: Integer
+end
+
+association Drivers between
+    Customer[1..*]
+    Rental[1..*]
+end
+
+association Car_Rental between
+    Car[0..1]
+    Rental[1..*]
+end
+
+association Car_CarGroup between
+    Car[1..*]
+    CarGroup[1..*]
+end
+
+association CarGroup_Branch between
+    CarGroup[1..*]
+    Branch[1..*]
+end
+
+constraints
+
+context Customer inv ValidLicense:
+    self.rental->forAll(r| r.agreedEnding<=self.licenseExpDate)
+
+context Car inv OnlyOneAssignment:
+    self.rental->select(ra| ra.state='active')->size()<=1
+
+context Car inv CarFleet:
+    Car.allInstances()->size()>=1
