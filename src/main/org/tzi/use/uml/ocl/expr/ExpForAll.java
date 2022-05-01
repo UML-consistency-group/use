@@ -21,7 +21,7 @@
 
 package org.tzi.use.uml.ocl.expr;
 
-import org.tzi.use.tree.OptType;
+import org.tzi.use.tree.ExpType;
 import org.tzi.use.tree.TreeNode;
 import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.ocl.type.TypeFactory;
@@ -36,13 +36,12 @@ import org.tzi.use.uml.ocl.value.Value;
 public class ExpForAll extends ExpQuery {
 
     @Override
-    public TreeNode getTreeNode() {
+    public TreeNode getTreeNode(TreeNode ref) {
         TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
                 TreeNodeType.ITERATOR,
-                OptType.FORALL,
-                null);
-        treeNode.addChile(fRangeExp.getTreeNode());
-        treeNode.addChile(fQueryExp.getTreeNode());
+                ExpType.FORALL);
+        treeNode.addChile(fRangeExp.getTreeNode(treeNode));
+        treeNode.addChile(fQueryExp.getTreeNode(treeNode));
         return treeNode;
     }
 

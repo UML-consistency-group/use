@@ -36,7 +36,7 @@ public abstract class Expression implements BufferedToString {
 	private SrcPos fSourcePosition;
 	
 	/** result type of the expression */
-	private Type fType;
+	protected Type fType;
 
     /** marked "@pre"? */
     private boolean fIsPre = false;
@@ -51,7 +51,7 @@ public abstract class Expression implements BufferedToString {
         fType = t;
     }
 
-    public TreeNode getTreeNode(){
+    public TreeNode getTreeNode(TreeNode ref){
         throw new RuntimeException("Expression Base class getTreeNode called!");
     }
     

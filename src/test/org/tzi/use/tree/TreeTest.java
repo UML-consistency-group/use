@@ -3,7 +3,6 @@ package org.tzi.use.tree;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
-import org.tzi.use.config.Options;
 import org.tzi.use.parser.use.USECompiler;
 import org.tzi.use.uml.mm.MClassInvariant;
 import org.tzi.use.uml.mm.MModel;
@@ -54,7 +53,21 @@ public class TreeTest extends TestCase {
     @Test
     public void testTreeRead(){
         List<Expression> expressions = model.classInvariants().stream().map(MClassInvariant::bodyExpression).collect(Collectors.toList());
-        List<TreeNode> trees = expressions.stream().map(Expression::getTreeNode).collect(Collectors.toList());
+        List<TreeNode> trees = expressions.stream().map(expression -> expression.getTreeNode(null)).collect(Collectors.toList());
+        System.out.println(0);
+    }
+
+    @Test
+    public void testTagSign(){
+        List<Expression> expressions = model.classInvariants().stream().map(MClassInvariant::bodyExpression).collect(Collectors.toList());
+        List<TreeNode> trees = expressions.stream().map(expression -> expression.getTreeNode(null)).collect(Collectors.toList());
+        trees.forEach(e -> e.setTag("und"));
+        System.out.println(0);
+    }
+
+    @Test
+    public void testPSE(){
+        List<OCLTree> oclTrees = model.classInvariants().stream().map(OCLTree::createTree).collect(Collectors.toList());
         System.out.println(0);
     }
 }

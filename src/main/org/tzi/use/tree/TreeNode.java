@@ -26,16 +26,27 @@ public class TreeNode {
     private String target;
 
     /**
+     * 当类型为VariableExp时，指示其是否是访问的self
+     */
+    private boolean isSelf;
+
+    /**
      * TreeNodeType为Operation和ITERATOR时的操作类型
      */
-    private OptType optType;
+    private ExpType expType;
 
     /**
      * und, +, -
      */
     private String tag;
 
+    /**
+     * 为target不是self时提供的指向select或forAll的引用
+     */
+    private TreeNode ref;
+
     private List<TreeNode> children;
+
 
     public TreeNode() {
         this.tag = "und";
@@ -43,13 +54,27 @@ public class TreeNode {
     }
 
 
-
-    public TreeNode(String expName, TreeNodeType type,  OptType optType, String target) {
+    public TreeNode(String expName, TreeNodeType type, ExpType expType) {
         this();
         this.expName = expName;
         this.type = type;
+        this.expType = expType;
+    }
+
+    public void setTarget(String target) {
         this.target = target;
-        this.optType = optType;
+    }
+
+    public void setSelf(boolean self) {
+        isSelf = self;
+    }
+
+    public void setRef(TreeNode ref) {
+        this.ref = ref;
+    }
+
+    public boolean isSelf() {
+        return isSelf;
     }
 
     public void addChile(TreeNode node){
@@ -68,8 +93,8 @@ public class TreeNode {
         return target;
     }
 
-    public OptType getOptType() {
-        return optType;
+    public ExpType getExpType() {
+        return expType;
     }
 
     public String getTag() {
@@ -78,5 +103,17 @@ public class TreeNode {
 
     public List<TreeNode> getChildren() {
         return children;
+    }
+
+    public void setTag(String tag){
+        this.tag = tag;
+        String[] childrenTags = this.type.getProrogation().apply(expType, tag).split(";");
+        for (int i = 0; i < children.size(); i++) {
+            children.get(i).setTag(childrenTags[i]);
+        }
+    }
+
+    public TreeNode getRef() {
+        return this.ref;
     }
 }

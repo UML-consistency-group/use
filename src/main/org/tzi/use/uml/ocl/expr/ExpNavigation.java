@@ -53,12 +53,12 @@ public final class ExpNavigation extends Expression {
     private final Expression[] qualifierExpressions;
 
     @Override
-    public TreeNode getTreeNode() {
+    public TreeNode getTreeNode(TreeNode ref) {
         TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
                 TreeNodeType.NAVIGATION,
-                null,
-                fSrc.toString() + "_" + fDst.toString());
-        treeNode.addChile(fObjExp.getTreeNode());
+                null);
+        treeNode.setTarget(fSrc.toString() + "." + fDst.toString());
+        treeNode.addChile(fObjExp.getTreeNode(ref));
         return treeNode;
     }
 
