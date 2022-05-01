@@ -21,6 +21,8 @@
 
 package org.tzi.use.uml.ocl.expr;
 
+import org.tzi.use.tree.TreeNode;
+import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.mm.MAttribute;
 import org.tzi.use.uml.ocl.value.ObjectValue;
 import org.tzi.use.uml.ocl.value.UndefinedValue;
@@ -39,7 +41,17 @@ public final class ExpAttrOp extends Expression {
     private MAttribute fAttr;
     
     private Expression fObjExp;
-    
+
+    @Override
+    public TreeNode getTreeNode() {
+        TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
+                TreeNodeType.ATTRIBUTE,
+                null,
+                fAttr.name());
+        treeNode.addChile(fObjExp.getTreeNode());
+        return treeNode;
+    }
+
     public ExpAttrOp(MAttribute a, Expression objExp) {
         super(a.type());
         fAttr = a;

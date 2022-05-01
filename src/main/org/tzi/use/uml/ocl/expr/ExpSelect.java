@@ -21,6 +21,9 @@
 
 package org.tzi.use.uml.ocl.expr;
 
+import org.tzi.use.tree.OptType;
+import org.tzi.use.tree.TreeNode;
+import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.ocl.value.Value;
 
 /** 
@@ -30,7 +33,18 @@ import org.tzi.use.uml.ocl.value.Value;
  * @author  Mark Richters
  */
 public class ExpSelect extends ExpQuery {
-    
+
+    @Override
+    public TreeNode getTreeNode() {
+        TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
+                TreeNodeType.ITERATOR,
+                OptType.SELECT,
+                null);
+        treeNode.addChile(fRangeExp.getTreeNode());
+        treeNode.addChile(fQueryExp.getTreeNode());
+        return treeNode;
+    }
+
     /**
      * Constructs a select expression. <code>elemVarDecl</code> may be null.
      */
