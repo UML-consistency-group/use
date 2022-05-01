@@ -37,10 +37,9 @@ public final class ExpConstReal extends Expression {
     private double fValue;
 
     @Override
-    public TreeNode getTreeNode() {
+    public TreeNode getTreeNode(TreeNode ref) {
         TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
                 TreeNodeType.CONSTANT,
-                null,
                 null);
         return treeNode;
     }

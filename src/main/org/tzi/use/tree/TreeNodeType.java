@@ -66,7 +66,7 @@ public enum TreeNodeType {
         return null;
     }
 
-    TreeNodeType(int id, String type, BiFunction<OptType, String, String> function, Function<String, Boolean> isSelf) {
+    TreeNodeType(int id, String type, BiFunction<ExpType, String, String> function, Function<String, Boolean> isSelf) {
         this.type = type;
         this.id = id;
         this.prorogation = function;
@@ -81,7 +81,7 @@ public enum TreeNodeType {
         return id;
     }
 
-    public BiFunction<OptType, String, String> getProrogation() {
+    public BiFunction<ExpType, String, String> getProrogation() {
         return prorogation;
     }
 
@@ -89,7 +89,7 @@ public enum TreeNodeType {
 
     private final int id;
 
-    private final BiFunction<OptType, String, String> prorogation;
+    private final BiFunction<ExpType, String, String> prorogation;
 
     private final Function<String, Boolean> isSelf;
 }

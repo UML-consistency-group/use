@@ -36,11 +36,16 @@ public final class ExpVariable extends Expression  {
     private String fVarname;
 
     @Override
-    public TreeNode getTreeNode() {
+    public TreeNode getTreeNode(TreeNode ref) {
         TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
                 TreeNodeType.VARIABLE,
-                null,
-                fVarname);
+                null);
+        if(!"self".equals(fVarname)){
+            treeNode.setRef(ref);
+        } else {
+            treeNode.setSelf(true);
+        }
+        treeNode.setTarget(fType.shortName());
         return treeNode;
     }
 

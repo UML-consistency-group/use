@@ -43,12 +43,12 @@ public final class ExpAttrOp extends Expression {
     private Expression fObjExp;
 
     @Override
-    public TreeNode getTreeNode() {
+    public TreeNode getTreeNode(TreeNode ref) {
         TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
                 TreeNodeType.ATTRIBUTE,
-                null,
-                fAttr.name());
-        treeNode.addChile(fObjExp.getTreeNode());
+                null);
+        treeNode.setTarget(fAttr.owner() + "." + fAttr.name());
+        treeNode.addChile(fObjExp.getTreeNode(ref));
         return treeNode;
     }
 

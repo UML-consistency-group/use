@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.tzi.use.config.Options;
 import org.tzi.use.config.Options.WarningType;
-import org.tzi.use.tree.OptType;
+import org.tzi.use.tree.ExpType;
 import org.tzi.use.tree.TreeNode;
 import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.ocl.expr.operations.BooleanOperation;
@@ -65,13 +65,12 @@ public final class ExpStdOp extends Expression {
     }
 
     @Override
-    public TreeNode getTreeNode() {
+    public TreeNode getTreeNode(TreeNode ref) {
         TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
                 TreeNodeType.OPERATION,
-                OptType.getOptType(fOp.getClass().getSimpleName()),
-                null);
+                ExpType.getOptType(fOp.getClass().getSimpleName()));
         for (Expression fArg : fArgs) {
-            treeNode.addChile(fArg.getTreeNode());
+            treeNode.addChile(fArg.getTreeNode(ref));
         }
         return treeNode;
     }

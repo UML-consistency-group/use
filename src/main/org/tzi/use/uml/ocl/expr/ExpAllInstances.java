@@ -23,7 +23,7 @@ package org.tzi.use.uml.ocl.expr;
 
 import java.util.Set;
 
-import org.tzi.use.tree.OptType;
+import org.tzi.use.tree.ExpType;
 import org.tzi.use.tree.TreeNode;
 import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.mm.MAssociation;
@@ -51,11 +51,10 @@ public final class ExpAllInstances extends Expression {
     private MClassifier fSourceType;
 
 	@Override
-	public TreeNode getTreeNode() {
+	public TreeNode getTreeNode(TreeNode ref) {
 		TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
 				TreeNodeType.OPERATION,
-				OptType.ALLINSTANCES,
-				null);
+				ExpType.ALLINSTANCES);
 		return treeNode;
 	}
 
