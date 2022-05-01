@@ -21,6 +21,8 @@
 
 package org.tzi.use.uml.ocl.expr;
 
+import org.tzi.use.tree.TreeNode;
+import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.ocl.type.TypeFactory;
 import org.tzi.use.uml.ocl.value.IntegerValue;
 import org.tzi.use.uml.ocl.value.Value;
@@ -33,6 +35,15 @@ import org.tzi.use.uml.ocl.value.Value;
  */
 public final class ExpConstInteger extends Expression {
     private final int fValue;
+
+    @Override
+    public TreeNode getTreeNode() {
+        TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
+                TreeNodeType.CONSTANT,
+                null,
+                null);
+        return treeNode;
+    }
 
     public ExpConstInteger(int n) {
         super(TypeFactory.mkInteger());

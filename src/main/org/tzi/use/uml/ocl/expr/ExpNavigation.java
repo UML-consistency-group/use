@@ -24,6 +24,8 @@ package org.tzi.use.uml.ocl.expr;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.tzi.use.tree.TreeNode;
+import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.mm.MClass;
 import org.tzi.use.uml.mm.MNavigableElement;
 import org.tzi.use.uml.ocl.type.CollectionType;
@@ -49,7 +51,17 @@ public final class ExpNavigation extends Expression {
     private final Expression fObjExp;
     
     private final Expression[] qualifierExpressions;
-    
+
+    @Override
+    public TreeNode getTreeNode() {
+        TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
+                TreeNodeType.NAVIGATION,
+                null,
+                fSrc.toString() + "_" + fDst.toString());
+        treeNode.addChile(fObjExp.getTreeNode());
+        return treeNode;
+    }
+
     public ExpNavigation(Expression objExp,
                          MNavigableElement src,
                          MNavigableElement dst,

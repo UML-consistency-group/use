@@ -21,6 +21,8 @@
 
 package org.tzi.use.uml.ocl.expr;
 
+import org.tzi.use.tree.TreeNode;
+import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.ocl.type.TypeFactory;
 import org.tzi.use.uml.ocl.value.RealValue;
 import org.tzi.use.uml.ocl.value.Value;
@@ -33,6 +35,15 @@ import org.tzi.use.uml.ocl.value.Value;
  */
 public final class ExpConstReal extends Expression {
     private double fValue;
+
+    @Override
+    public TreeNode getTreeNode() {
+        TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
+                TreeNodeType.CONSTANT,
+                null,
+                null);
+        return treeNode;
+    }
 
     public ExpConstReal(double d) {
         super(TypeFactory.mkReal());
