@@ -25,6 +25,9 @@ import java.util.List;
 
 import org.tzi.use.config.Options;
 import org.tzi.use.config.Options.WarningType;
+import org.tzi.use.tree.ExpType;
+import org.tzi.use.tree.TreeNode;
+import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.ocl.expr.operations.BooleanOperation;
 import org.tzi.use.uml.ocl.expr.operations.OpGeneric;
 import org.tzi.use.uml.ocl.type.CollectionType;
@@ -59,6 +62,18 @@ public final class ExpStdOp extends Expression {
     static {
         opmap = ArrayListMultimap.create(150, 5);
         OpGeneric.registerOperations(opmap);
+    }
+
+    @Override
+    public TreeNode getTreeNode(TreeNode ref) {
+        TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
+                TreeNodeType.OPERATION,
+                ExpType.getOptType(fOp.getClass().getSimpleName()));
+        treeNode.setTarget(fOp.name());
+        for (Expression fArg : fArgs) {
+            treeNode.addChile(fArg.getTreeNode(ref));
+        }
+        return treeNode;
     }
 
     /***

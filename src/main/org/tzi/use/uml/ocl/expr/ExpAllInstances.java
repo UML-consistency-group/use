@@ -23,6 +23,9 @@ package org.tzi.use.uml.ocl.expr;
 
 import java.util.Set;
 
+import org.tzi.use.tree.ExpType;
+import org.tzi.use.tree.TreeNode;
+import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.mm.MAssociation;
 import org.tzi.use.uml.mm.MClass;
 import org.tzi.use.uml.mm.MClassifier;
@@ -46,8 +49,17 @@ import org.tzi.use.uml.sys.MSystemState;
  */
 public final class ExpAllInstances extends Expression {
     private MClassifier fSourceType;
-    
-    public ExpAllInstances(Type sourceType)
+
+	@Override
+	public TreeNode getTreeNode(TreeNode ref) {
+		TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
+				TreeNodeType.OPERATION,
+				ExpType.ALLINSTANCES);
+		treeNode.setTarget(fSourceType.name());
+		return treeNode;
+	}
+
+	public ExpAllInstances(Type sourceType)
         throws ExpInvalidException
     {
         // result type is a set of sourceType

@@ -21,6 +21,8 @@
 
 package org.tzi.use.uml.ocl.expr;
 
+import org.tzi.use.tree.TreeNode;
+import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.ocl.type.TypeFactory;
 import org.tzi.use.uml.ocl.value.UnlimitedNaturalValue;
 import org.tzi.use.uml.ocl.value.Value;
@@ -34,6 +36,14 @@ public class ExpConstUnlimitedNatural extends Expression {
 	
     public ExpConstUnlimitedNatural() {
         super(TypeFactory.mkUnlimitedNatural());
+    }
+
+    @Override
+    public TreeNode getTreeNode(TreeNode ref) {
+        TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
+                TreeNodeType.CONSTANT,
+                null);
+        return treeNode;
     }
 
     /**

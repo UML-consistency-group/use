@@ -22,6 +22,7 @@
 package org.tzi.use.uml.ocl.expr;
 
 import org.tzi.use.parser.SrcPos;
+import org.tzi.use.tree.TreeNode;
 import org.tzi.use.uml.ocl.type.Type;
 import org.tzi.use.uml.ocl.type.TypeFactory;
 import org.tzi.use.uml.ocl.value.Value;
@@ -35,7 +36,7 @@ public abstract class Expression implements BufferedToString {
 	private SrcPos fSourcePosition;
 	
 	/** result type of the expression */
-	private Type fType;
+	protected Type fType;
 
     /** marked "@pre"? */
     private boolean fIsPre = false;
@@ -48,6 +49,10 @@ public abstract class Expression implements BufferedToString {
     
     protected Expression(Type t) {
         fType = t;
+    }
+
+    public TreeNode getTreeNode(TreeNode ref){
+        throw new RuntimeException("Expression Base class getTreeNode called!");
     }
     
     /**

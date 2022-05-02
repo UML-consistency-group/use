@@ -21,6 +21,8 @@
 
 package org.tzi.use.uml.ocl.expr;
 
+import org.tzi.use.tree.TreeNode;
+import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.ocl.type.Type;
 import org.tzi.use.uml.ocl.value.Value;
 
@@ -32,6 +34,20 @@ import org.tzi.use.uml.ocl.value.Value;
  */
 public final class ExpVariable extends Expression  {
     private String fVarname;
+
+    @Override
+    public TreeNode getTreeNode(TreeNode ref) {
+        TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
+                TreeNodeType.VARIABLE,
+                null);
+        if(!"self".equals(fVarname)){
+            treeNode.setRef(ref);
+        } else {
+            treeNode.setSelf(true);
+        }
+        treeNode.setTarget(fType.shortName());
+        return treeNode;
+    }
 
     public ExpVariable(String varname, Type t) {
         super(t);
