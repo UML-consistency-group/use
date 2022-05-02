@@ -56,10 +56,10 @@ end
 constraints
 
 context Customer inv ValidLicense:
-    self.rental->forAll(r| r.agreedEnding<=self.licenseExpDate)
+    self.rental->forAll(r | r.agreedEnding<=self.licenseExpDate)
 
 context Car inv OnlyOneAssignment:
-    self.rental->select(ra| ra.state='active')->size()<=1
+    self.rental->select(ra | ra.state='active')->size()<=1
 
 context Car inv CarFleet:
     Car.allInstances()->size()>=1
