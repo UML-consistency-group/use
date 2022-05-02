@@ -55,6 +55,7 @@ public final class ExpAllInstances extends Expression {
 		TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
 				TreeNodeType.OPERATION,
 				ExpType.ALLINSTANCES);
+		treeNode.setTarget(fSourceType.name());
 		return treeNode;
 	}
 

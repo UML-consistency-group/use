@@ -21,15 +21,18 @@ public class OCLTree {
 
     private String context;
 
+    private String name;
+
     public static OCLTree createTree(MClassInvariant invariant){
-        return new OCLTree(invariant.bodyExpression(), invariant.name());
+        return new OCLTree(invariant.bodyExpression(), invariant.name(), invariant.cls().name());
     }
 
-    private OCLTree(Expression e, String context){
+    private OCLTree(Expression e, String name, String context){
         root = e.getTreeNode(null);
         root.setTag("und");
         this.PSEList = new HashSet<>();
         this.context = context;
+        this.name = name;
         initPSE();
     }
 
@@ -92,5 +95,11 @@ public class OCLTree {
 
     public Set<PSE> getPSEList() {
         return PSEList;
+    }
+
+    @Override
+    public String toString() {
+        return "context " + context + " inv " + name + ":\n\t"
+                + root.toString();
     }
 }

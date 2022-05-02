@@ -39,6 +39,7 @@ public class ExpSelect extends ExpQuery {
         TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
                 TreeNodeType.ITERATOR,
                 ExpType.SELECT);
+        treeNode.setTarget(fElemVarDecls.varDecl(0).name());
         treeNode.addChile(fRangeExp.getTreeNode(treeNode));
         treeNode.addChile(fQueryExp.getTreeNode(treeNode));
         return treeNode;

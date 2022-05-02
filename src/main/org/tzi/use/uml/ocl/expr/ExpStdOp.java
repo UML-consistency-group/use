@@ -69,6 +69,7 @@ public final class ExpStdOp extends Expression {
         TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
                 TreeNodeType.OPERATION,
                 ExpType.getOptType(fOp.getClass().getSimpleName()));
+        treeNode.setTarget(fOp.name());
         for (Expression fArg : fArgs) {
             treeNode.addChile(fArg.getTreeNode(ref));
         }
