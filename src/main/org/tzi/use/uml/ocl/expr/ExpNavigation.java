@@ -21,6 +21,7 @@
 
 package org.tzi.use.uml.ocl.expr;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,6 +61,16 @@ public final class ExpNavigation extends Expression {
         treeNode.setTarget(fSrc.toString() + "." + fDst.toString());
         treeNode.addChile(fObjExp.getTreeNode(ref));
         return treeNode;
+    }
+
+    @Override
+    public Expression copy() {
+        try {
+            return new ExpNavigation(this.fObjExp,this.fSrc,this.fDst, Arrays.asList(this.qualifierExpressions));
+        } catch (ExpInvalidException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public ExpNavigation(Expression objExp,

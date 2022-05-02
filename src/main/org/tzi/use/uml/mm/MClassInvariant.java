@@ -92,7 +92,7 @@ public final class MClassInvariant extends MModelElementImpl implements UseFileL
     /**
      * Constructs a new invariant. The <code>name</code> and <code>vars</code> is optional, i.e., can be <code>null</code>.
      */
-    MClassInvariant(String name, List<String> vars, MClass cls, Expression inv, boolean isExistential)
+    public MClassInvariant(String name, List<String> vars, MClass cls, Expression inv, boolean isExistential)
         throws ExpInvalidException
     {
         super(name);
