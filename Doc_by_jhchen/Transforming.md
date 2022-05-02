@@ -1,26 +1,49 @@
-package org.tzi.use.transform;
+改变cotext的前提，至少有一个association过程seq~as~ 包括了cet1,cet2.
 
-import org.tzi.use.uml.mm.*;
-import org.tzi.use.uml.ocl.expr.*;
-import org.tzi.use.uml.ocl.type.Type;
+并且seq~as~ 需要保证，在cet1作为context时，cet1的实例集全体与以cet2为context时，从cet2导航到cet1的实例集全体相同。即，改变context后，不能改变cet1原有受影响的实例集。
 
-import java.util.ArrayList;
-import java.util.List;
+We can determine whether set~cet1~ = set’~cet1~ by studying the  multiplicity of the associations included in seq~as~
 
-/**
- * @author: jhchen
- * @date: 2022-05-02 20:49
- * @description:
- */
-public class Transform {
 
-    /**
-     * 第一步，在外部添加forAll表达式，找到path，代替self
-     * @param preInv
-     * @param tarContext
-     * @return
-     */
-    public MClassInvariant transformStep1(MClassInvariant preInv, MClassImpl tarContext) {
+
+从context A转到B，需要多重性上，一个A实例对应至少一个B实例，这样从B导航到A时，才能包括所有A。
+
+
+
+用图方法解决L
+
+
+
+图的定义：
+
+将model用单向图表示，实体类作为定点，关系作为边，利用多重性定义边的指向，可以得到context转化关系。
+
+如果存在A->B的路径。所有context为A的ic都可以转化成B为context
+
+![image-20220501111245153](Transforming.assets/image-20220501111245153.png)
+
+
+
+第一步转化为一般式子
+
+![image-20220501151951922](Transforming.assets/image-20220501151951922.png)
+
+![image-20220501154147101](Transforming.assets/image-20220501154147101.png)
+
+
+
+最最重要的，4条化简规则：
+
+![image-20220501151928749](Transforming.assets/image-20220501151928749.png)
+
+
+
+
+
+第一步，在X外部添加节点forAll，改变context
+
+```
+	public MClassInvariant transformStep1(MClassInvariant preInv, MClassImpl tarContext) {
         Expression body = preInv.bodyExpression().copy();
         MClass srcContext = preInv.cls();
 
@@ -54,33 +77,16 @@ public class Transform {
 
         return tarInv;
     }
+```
 
-    /**
-     * 返回从源类到目的类的一个Navigation 表达式路径
-     * @param srcContext
-     * @param tarContext
-     * @return
-     */
-    public Expression getPathFrom(MClass srcContext, MClass tarContext){
-        return null;
-    }
 
-    //找到没有在exp中用过的变量名
-    public String findVarNotInExp(Expression exp){
-        return null;
-    }
 
-    //将exp中原来名字为srcName的Variable节点的名字改为tarName
-    public void changeNameOfVarInExp(Expression exp,String srcName, String tarName){
-        ;
-    }
 
-    /**
-     * 转换的第2步骤，不断检验fBody是否满足化简规则并化简
-     * @param preInv
-     * @return
-     */
-    public MClassInvariant transformStep2(MClassInvariant preInv) {
+
+第二步，根据4条规则，对表达式进行化简
+
+```
+	public MClassInvariant transformStep2(MClassInvariant preInv) {
         Expression body = preInv.bodyExpression().copy();   //获取原约束的body
 
         int n = -1;
@@ -100,33 +106,18 @@ public class Transform {
         }
         return tarInv;
     }
+```
 
-    int checkRules(Expression exp){
-        if(checkRule2(exp))
-            return 2;
-        if(checkRule3(exp))
-            return 3;
-        if (checkRule4(exp))
-            return 4;
-        return -1;
-    }
 
-    Expression applyRules(Expression exp,int ruleNum){
-        if(ruleNum == 2)
-            return applyRule2(exp);
-        if(ruleNum == 3)
-            return applyRule3(exp);
-        if (ruleNum == 4)
-            return applyRule4(exp);
-        return exp;
-    }
 
-    /**
-     * 第2条规则，消除外包forAll
-     * @param exp_
-     * @return
-     */
-    Boolean checkRule2(Expression exp_){
+rule 2:   消除forAll
+
+![image-20220502093838482](Transforming.assets/image-20220502093838482.png)
+
+
+
+```
+	Boolean checkRule2(Expression exp_){
         Expression exp = exp_.copy();
 
         if(!(exp instanceof ExpForAll))
@@ -149,19 +140,12 @@ public class Transform {
 
         return true;
     }
+```
 
-    Boolean checkRule3(Expression exp){
-        return false;
-    }
-    Boolean checkRule4(Expression exp){
-        return false;
-    }
 
-    /**
-     * rule 2 的具体过程，把forAll左子树导入内部表达式的self节点
-     * @param exp_
-     * @return
-     */
+
+```
+//执行过程：
     Expression applyRule2(Expression exp_){
         Expression exp = exp_.copy();
         Expression path = ((ExpForAll)exp).getRangeExpression();
@@ -175,12 +159,6 @@ public class Transform {
         return body;
     }
 
-    /**
-     * 将body表达式中所有名字为varName的ExpVariable节点替换为tarExp
-     * @param body
-     * @param varName
-     * @param tarExp
-     */
     void replaceVarWithExp(Expression body,String varName,Expression tarExp){
         if (body instanceof ExpVariable){   //判断当前节点的类型和名字
             if(body.name().equals(varName)){
@@ -197,15 +175,44 @@ public class Transform {
 
     }
 
-    Expression getNext(Expression exp){
-        return null;
-    }
+```
 
 
-    Expression applyRule3(Expression exp){
-        return null;
-    }
-    Expression applyRule4(Expression exp){
-        return null;
-    }
+
+
+
+
+
+## rule 3
+
+![image-20220502172834046](Transforming.assets/image-20220502172834046.png)
+
+```
+//
+rule3Process(Expression exp){
+	
 }
+```
+
+
+
+
+
+
+
+
+
+
+
+替换后如图：
+
+![image-20220501161959266](Transforming.assets/image-20220501161959266.png)
+
+原表达式：
+
+self.rental->forAll(r : Rental | (r.agreedEnding <= self.licenseExpDate))
+
+替换后：
+
+self.customer.rental->forAll(r:Rental | r.agreedEnding <= self.customer.licenseExpDate)
+
