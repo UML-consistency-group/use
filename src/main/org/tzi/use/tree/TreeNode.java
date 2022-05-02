@@ -79,9 +79,15 @@ public class TreeNode {
             }
             throw new RuntimeException("Error Children num for OPERATION");
         });
-        toStringFun.put(TreeNodeType.ATTRIBUTE, TreeNode::getTarget);
-        toStringFun.put(TreeNodeType.VARIABLE, TreeNode::getTarget);
-        toStringFun.put(TreeNodeType.NAVIGATION, TreeNode::getTarget);
+        toStringFun.put(TreeNodeType.ATTRIBUTE, node -> {
+            return node.getChildren().get(0) + "." + node.getTarget().split("\\.")[1];
+        });
+        toStringFun.put(TreeNodeType.VARIABLE, node -> {
+            return node.isSelf() ? "self" :  node.getRef().getTarget();
+        });
+        toStringFun.put(TreeNodeType.NAVIGATION, node -> {
+            return node.getChildren().get(0) + "." + node.getTarget().split("\\.")[1];
+        });
         toStringFun.put(TreeNodeType.CONSTANT, TreeNode::getTarget);
     }
 

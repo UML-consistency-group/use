@@ -68,6 +68,21 @@ public class TreeTest extends TestCase {
     @Test
     public void testPSE(){
         List<OCLTree> oclTrees = model.classInvariants().stream().map(OCLTree::createTree).collect(Collectors.toList());
-        System.out.println(0);
+        String[] standard = {"context Customer inv ValidLicense:\n" +
+                "\tself.rental->forAll(r | r.agreedEnding<=self.licenseExpDate)", "context Car inv OnlyOneAssignment:\n" +
+                "\tself.rental->select(ra | ra.state='active')->size()<=1", "context Car inv CarFleet:\n" +
+                "\tCar.allInstances()->size()>=1"};
+        for (int i = 0; i < oclTrees.size(); i++) {
+            OCLTree oclTree = oclTrees.get(i);
+            String name = oclTree.getName();
+            String except = null;
+            for (int j = 0; j < standard.length; j++) {
+                if (standard[j].contains(name)){
+                    except = standard[j];
+                }
+            }
+            assertNotNull(except);
+            assertEquals(except, oclTree.toString());
+        }
     }
 }

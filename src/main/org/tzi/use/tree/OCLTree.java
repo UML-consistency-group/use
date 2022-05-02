@@ -97,6 +97,14 @@ public class OCLTree {
         return PSEList;
     }
 
+    public String getContext() {
+        return context;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "context " + context + " inv " + name + ":\n\t"
