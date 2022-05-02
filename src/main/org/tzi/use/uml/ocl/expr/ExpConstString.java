@@ -41,6 +41,7 @@ public final class ExpConstString extends Expression {
         TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
                 TreeNodeType.CONSTANT,
                 null);
+        treeNode.setTarget(fValue);
         return treeNode;
     }
 

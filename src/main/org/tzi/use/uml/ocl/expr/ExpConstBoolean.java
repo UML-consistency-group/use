@@ -21,6 +21,8 @@
 
 package org.tzi.use.uml.ocl.expr;
 
+import org.tzi.use.tree.TreeNode;
+import org.tzi.use.tree.TreeNodeType;
 import org.tzi.use.uml.ocl.type.TypeFactory;
 import org.tzi.use.uml.ocl.value.BooleanValue;
 import org.tzi.use.uml.ocl.value.Value;
@@ -37,6 +39,15 @@ public final class ExpConstBoolean extends Expression {
     public ExpConstBoolean(boolean b) {
         super(TypeFactory.mkBoolean());
         fValue = b;
+    }
+
+    @Override
+    public TreeNode getTreeNode(TreeNode ref) {
+        TreeNode treeNode = new TreeNode(this.getClass().getSimpleName(),
+                TreeNodeType.CONSTANT,
+                null);
+        treeNode.setTarget(String.valueOf(fValue));
+        return treeNode;
     }
 
     public boolean value() {
