@@ -51,6 +51,10 @@ public abstract class Expression implements BufferedToString {
         fType = t;
     }
 
+    public Expression copy() {
+        throw new RuntimeException("Base called");
+    }
+
     public TreeNode getTreeNode(TreeNode ref){
         throw new RuntimeException("Expression Base class getTreeNode called!");
     }

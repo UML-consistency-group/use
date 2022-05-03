@@ -58,6 +58,8 @@ constraints
 context Customer inv ValidLicense:
     self.rental->forAll(r | r.agreedEnding<=self.licenseExpDate)
 
+
+
 context Car inv OnlyOneAssignment:
     self.rental->select(ra | ra.state='active')->size()<=1
 

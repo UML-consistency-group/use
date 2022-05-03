@@ -46,6 +46,16 @@ public class ExpForAll extends ExpQuery {
         return treeNode;
     }
 
+    @Override
+    public Expression copy() {
+        try {
+            return new ExpForAll(this.fElemVarDecls,this.fRangeExp,this.fQueryExp);
+        } catch (ExpInvalidException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Constructs a forAll expression.
      */
